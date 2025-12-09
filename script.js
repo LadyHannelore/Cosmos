@@ -18,7 +18,56 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCards();
     initializeButtons();
     updateCardContent();
+    initializeThemeToggle();
+    initializeProgressTracking();
+    updateProgress();
 });
+
+// Theme Toggle
+function initializeThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-theme');
+        themeToggle.textContent = '☀️';
+    }
+    
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        const newTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+        localStorage.setItem('theme', newTheme);
+        themeToggle.textContent = newTheme === 'light' ? '☀️' : '🌙';
+    });
+}
+
+// Progress Tracking
+function initializeProgressTracking() {
+    document.addEventListener('change', updateProgress);
+}
+
+function updateProgress() {
+    const requiredCategories = ['philosophy', 'structure', 'domain', 'tactics', 'technology', 'command', 'logistics'];
+    let completed = 0;
+    
+    requiredCategories.forEach(category => {
+        const badge = document.getElementById(`badge-${category}`);
+        if (selections[category]) {
+            completed++;
+            badge.classList.add('visible');
+        } else {
+            badge.classList.remove('visible');
+        }
+    });
+    
+    // Update special characteristics counter
+    const specialCounter = document.getElementById('special-counter');
+    specialCounter.textContent = `${selections.special.length} selected`;
+    
+    const percentage = Math.round((completed / requiredCategories.length) * 100);
+    document.getElementById('progressFill').style.width = percentage + '%';
+    document.getElementById('progressPercent').textContent = percentage + '%';
+}
 
 // Update card content from doctrineContent object
 function updateCardContent() {
@@ -76,6 +125,8 @@ function initializeButtons() {
     document.getElementById('generateBtn').addEventListener('click', generateDoctrine);
     document.getElementById('resetBtn').addEventListener('click', resetSelections);
     document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+    document.getElementById('printBtn').addEventListener('click', printDoctrine);
+    document.getElementById('shareBtn').addEventListener('click', shareDoctrine);
 }
 
 // Generate the doctrine summary
@@ -247,17 +298,44 @@ function copyToClipboard() {
     const textContent = tempDiv.textContent || tempDiv.innerText;
     
     navigator.clipboard.writeText(textContent).then(() => {
-        copyBtn.textContent = 'Copied!';
-        copyBtn.classList.add('copied');
+        copyBtn.textContent = '✓ Copied!';
+        copyBtn.style.background = 'var(--success-color)';
         
         setTimeout(() => {
-            copyBtn.textContent = 'Copy to Clipboard';
-            copyBtn.classList.remove('copied');
+            copyBtn.textContent = '📋 Copy to Clipboard';
+            copyBtn.style.background = '';
         }, 2000);
     }).catch(err => {
         console.error('Failed to copy:', err);
-        copyBtn.textContent = 'Failed to copy';
+        copyBtn.textContent = '❌ Failed to copy';
     });
+}
+
+// Print doctrine
+function printDoctrine() {
+    window.print();
+}
+
+// Share doctrine (uses Web Share API or fallback)
+function shareDoctrine() {
+    const output = document.getElementById('doctrine-output');
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = output.innerHTML;
+    const textContent = tempDiv.textContent || tempDiv.innerText;
+    
+    const doctrineText = `Check out my 1959 Alternate History Military Doctrine!\n\n${textContent}\n\nBuilt with the Military Doctrine Builder`;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'My Military Doctrine',
+            text: doctrineText,
+        }).catch(err => console.log('Share cancelled:', err));
+    } else {
+        // Fallback: copy to clipboard and show message
+        navigator.clipboard.writeText(doctrineText).then(() => {
+            alert('Doctrine copied to clipboard! You can now paste it anywhere.');
+        });
+    }
 }
 
 // ============================================
