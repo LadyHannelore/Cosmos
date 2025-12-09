@@ -123,6 +123,38 @@ function initializeCards() {
     });
 }
 
+// Update UI to reflect current selections (used when loading presets)
+function updateUIFromSelections() {
+    const optionCards = document.querySelectorAll('.option-card');
+    
+    optionCards.forEach(card => {
+        const grid = card.closest('.options-grid');
+        const category = grid.dataset.category;
+        const value = card.dataset.value;
+        const isMultiSelect = grid.classList.contains('multi-select');
+        
+        if (isMultiSelect) {
+            // Multi-select: check if value is in selections array
+            if (selections[category].includes(value)) {
+                card.classList.add('selected');
+            } else {
+                card.classList.remove('selected');
+            }
+        } else {
+            // Single select: check if value matches selection
+            if (selections[category] === value) {
+                card.classList.add('selected');
+            } else {
+                card.classList.remove('selected');
+            }
+        }
+    });
+    
+    // Update progress and completion badges
+    updateProgress();
+    updateCardContent();
+}
+
 // Initialize button handlers
 function initializeButtons() {
     document.getElementById('generateBtn').addEventListener('click', generateDoctrine);
@@ -136,6 +168,10 @@ function initializeButtons() {
         document.getElementById('importFile').click();
     });
     document.getElementById('importFile').addEventListener('change', importDoctrine);
+    
+    // Preset buttons
+    document.getElementById('randomBtn').addEventListener('click', randomizeDoctrine);
+    document.getElementById('presetsBtn').addEventListener('click', showPresetsModal);
 }
 
 // Generate the doctrine summary
@@ -231,6 +267,39 @@ function generateDoctrine() {
     
     // Scroll to results
     resultsSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Randomize all selections
+function randomizeDoctrine() {
+    const philosophies = Object.keys(doctrineContent.philosophy);
+    const structures = Object.keys(doctrineContent.structure);
+    const domains = Object.keys(doctrineContent.domain);
+    const tacticsList = Object.keys(doctrineContent.tactics);
+    const technologies = Object.keys(doctrineContent.technology);
+    const commands = Object.keys(doctrineContent.command);
+    const logisticsList = Object.keys(doctrineContent.logistics);
+    const specials = Object.keys(doctrineContent.special);
+    
+    // Randomly select one from each category
+    selections.philosophy = philosophies[Math.floor(Math.random() * philosophies.length)];
+    selections.structure = structures[Math.floor(Math.random() * structures.length)];
+    selections.domain = domains[Math.floor(Math.random() * domains.length)];
+    selections.tactics = tacticsList[Math.floor(Math.random() * tacticsList.length)];
+    selections.technology = technologies[Math.floor(Math.random() * technologies.length)];
+    selections.command = commands[Math.floor(Math.random() * commands.length)];
+    selections.logistics = logisticsList[Math.floor(Math.random() * logisticsList.length)];
+    
+    // Randomly select 0-3 special characteristics
+    const numSpecials = Math.floor(Math.random() * 4); // 0-3
+    selections.special = [];
+    const shuffled = specials.sort(() => Math.random() - 0.5);
+    for (let i = 0; i < numSpecials && i < shuffled.length; i++) {
+        selections.special.push(shuffled[i]);
+    }
+    
+    // Update UI and auto-generate
+    updateUIFromSelections();
+    generateDoctrine();
 }
 
 // Attempt to match selections to a named historical doctrine
@@ -433,8 +502,27 @@ function saveDoctrine() {
     }
     
     const nationName = document.getElementById('nationName').value.trim() || 'Unnamed Nation';
+    
+    // Prompt for custom doctrine name
+    const customName = prompt('Give this doctrine a custom name (optional):\n(e.g., "First Attempt", "Experimental v2")');
+    
+    // Prompt for tags
+    const tagsInput = prompt('Add tags separated by commas (optional):\n(e.g., "soviet, experimental, approved")');
+    const tags = tagsInput ? tagsInput.split(',').map(tag => tag.trim()).filter(tag => tag.length > 0) : [];
+    
+    // Calculate version - check if a doctrine with same custom name already exists
+    let version = 1;
+    if (customName) {
+        const existingDocs = DoctrineStorage.getAllDoctrines();
+        const similarDocs = existingDocs.filter(d => d.customName === customName);
+        version = similarDocs.length + 1;
+    }
+    
     const doctrineData = {
         nationName: nationName,
+        customName: customName || undefined,
+        version: version,
+        tags: tags.length > 0 ? tags : undefined,
         selections: JSON.parse(JSON.stringify(selections)),
         matchedDoctrine: lastMatchedDoctrine,
         fullOutput: output.textContent,
@@ -442,7 +530,8 @@ function saveDoctrine() {
     };
     
     DoctrineStorage.saveDoctrine(doctrineData);
-    alert(`Doctrine for "${nationName}" saved successfully!`);
+    const versionStr = version > 1 ? ` (v${version})` : '';
+    alert(`Doctrine for "${nationName}" saved successfully!${versionStr}`);
 }
 
 // Export Doctrine as JSON
@@ -477,8 +566,177 @@ function importDoctrine(event) {
     };
     reader.readAsText(file);
 }
-// 4. To make a category multi-select:
+
+// Show presets modal
+function showPresetsModal() {
+    const presets = getAllPresets();
+    let html = '<div style="max-height: 400px; overflow-y: auto;">';
+    
+    presets.forEach(preset => {
+        html += `
+            <div style="padding: 15px; margin-bottom: 10px; background: var(--bg-dark-secondary); border: 1px solid var(--gold-color); border-radius: 6px; cursor: pointer;" onclick="loadPreset('${preset.key}'); alert('Preset loaded: ${preset.name}');">
+                <strong style="color: var(--accent-color);">${preset.name}</strong>
+                <p style="margin: 5px 0 0 0; color: var(--secondary-text-color); font-size: 0.9rem;">${preset.description}</p>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    
+    // Use alert for now, could be replaced with a styled modal
+    const result = window.confirm(`Click OK to load a preset. Then select one:\n\n${presets.map(p => p.name).join('\n')}`);
+    
+    if (result) {
+        // Create a simple selection prompt
+        const presetNames = presets.map(p => `${p.key}|${p.name}`).join('\n');
+        const choice = prompt(`Enter preset name or key:\n\n${presetNames}`);
+        
+        if (choice) {
+            const selected = presets.find(p => p.key === choice || p.name === choice);
+            if (selected && loadPreset(selected.key)) {
+                alert(`Loaded: ${selected.name}`);
+            } else {
+                alert('Preset not found');
+            }
+        }
+    }
+}
+
+
 //    - Add 'multi-select' class to the options-grid
 //    - Initialize the category as an array in 'selections'
 //    - Handle array output in generateDoctrine()
 //
+
+// Export as Markdown
+function exportAsMarkdown() {
+    const output = document.getElementById('doctrine-output');
+    const nationName = document.getElementById('nationName').value.trim() || 'Unnamed Nation';
+    
+    if (!output.textContent.trim()) {
+        alert('Please generate a doctrine first before exporting!');
+        return;
+    }
+    
+    let markdown = `# ${nationName} - Military Doctrine\n\n`;
+    markdown += `**Generated:** ${new Date().toLocaleString()}\n`;
+    markdown += `**Matched Doctrine:** ${lastMatchedDoctrine || 'Custom'}\n\n`;
+    markdown += `## Doctrine Output\n\n\`\`\`\n${output.textContent}\n\`\`\`\n`;
+    
+    const blob = new Blob([markdown], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${nationName.replace(/\s+/g, '-')}-doctrine-${new Date().toISOString().split('T')[0]}.md`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Export as HTML
+function exportAsHTML() {
+    const output = document.getElementById('doctrine-output');
+    const nationName = document.getElementById('nationName').value.trim() || 'Unnamed Nation';
+    
+    if (!output.textContent.trim()) {
+        alert('Please generate a doctrine first before exporting!');
+        return;
+    }
+    
+    let html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${nationName} - Military Doctrine</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a1428;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 { color: #dc143c; border-bottom: 3px solid #d4af37; padding-bottom: 10px; }
+        .meta { color: #b0b0b0; font-size: 0.9rem; margin: 20px 0; }
+        .doctrine-output { background: #2d5a3d; padding: 20px; border-left: 4px solid #d4af37; white-space: pre-wrap; }
+        .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #d4af37; color: #b0b0b0; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+    <h1>${nationName} - Military Doctrine</h1>
+    <div class="meta">
+        <p><strong>Generated:</strong> ${new Date().toLocaleString()}</p>
+        <p><strong>Matched Doctrine:</strong> ${lastMatchedDoctrine || 'Custom'}</p>
+    </div>
+    <div class="doctrine-output">${output.textContent}</div>
+    <div class="footer">
+        <p>Generated by Military Doctrine Builder • 1959 Alternate History</p>
+    </div>
+</body>
+</html>`;
+    
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${nationName.replace(/\s+/g, '-')}-doctrine-${new Date().toISOString().split('T')[0]}.html`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Export as Plain Text
+function exportAsPlainText() {
+    const output = document.getElementById('doctrine-output');
+    const nationName = document.getElementById('nationName').value.trim() || 'Unnamed Nation';
+    
+    if (!output.textContent.trim()) {
+        alert('Please generate a doctrine first before exporting!');
+        return;
+    }
+    
+    let text = `${nationName} - Military Doctrine\n`;
+    text += `Generated: ${new Date().toLocaleString()}\n`;
+    text += `Matched Doctrine: ${lastMatchedDoctrine || 'Custom'}\n`;
+    text += `${'='.repeat(80)}\n\n`;
+    text += output.textContent;
+    
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${nationName.replace(/\s+/g, '-')}-doctrine-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Show export format modal
+function showExportModal() {
+    const formats = [
+        { name: 'JSON', desc: 'Import into other tools', fn: 'exportDoctrine()' },
+        { name: 'Markdown', desc: 'For documentation', fn: 'exportAsMarkdown()' },
+        { name: 'HTML', desc: 'Styled document', fn: 'exportAsHTML()' },
+        { name: 'Plain Text', desc: 'Simple text format', fn: 'exportAsPlainText()' }
+    ];
+    
+    let msg = 'Choose export format:\n\n';
+    formats.forEach((fmt, i) => {
+        msg += `${i + 1}. ${fmt.name} - ${fmt.desc}\n`;
+    });
+    
+    const choice = prompt(msg + '\nEnter format number (1-4):');
+    
+    if (choice) {
+        const idx = parseInt(choice) - 1;
+        if (idx >= 0 && idx < formats.length) {
+            eval(formats[idx].fn);
+        }
+    }
+}

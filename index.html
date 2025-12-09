@@ -39,6 +39,12 @@
             <p class="nation-help">The nation name will appear at the top of your generated doctrine</p>
         </div>
 
+        <!-- Quick Action Buttons -->
+        <div class="quick-actions">
+            <button id="randomBtn" class="action-btn random-btn" title="Generate random doctrine selections">🎲 Randomize</button>
+            <button id="presetsBtn" class="action-btn presets-btn" title="Load a pre-configured doctrine">📋 Presets</button>
+        </div>
+
         <!-- Builder Page Wrapper -->
         <div id="page-builder" class="page">
             <!-- Section 1: Core Philosophy -->
@@ -290,6 +296,7 @@
             <!-- Import/Export Section -->
             <div class="import-export-section">
                 <button id="exportBtn" class="export-btn">📤 Export as JSON</button>
+                <button id="exportFormatsBtn" class="export-btn" onclick="showExportModal()">💾 Other Formats</button>
                 <button id="importBtn" class="import-btn">📥 Import from JSON</button>
                 <input type="file" id="importFile" accept=".json" style="display: none;">
             </div>
@@ -314,6 +321,7 @@
     </div>
 
     <script src="doctrine-data.js"></script>
+    <script src="presets.js"></script>
     <script src="pages.js"></script>
     <script src="script.js"></script>
 </body>

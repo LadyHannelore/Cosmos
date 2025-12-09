@@ -107,15 +107,35 @@ class PageManager {
         let html = `
             <div class="page-container">
                 <h2>📚 Doctrine Gallery</h2>
+                
+                <!-- Search/Filter Section -->
+                <div class="gallery-filters">
+                    <input type="text" id="gallerySearch" placeholder="Search by nation or doctrine name..." class="gallery-search">
+                    <select id="difficultyFilter" class="gallery-filter-select">
+                        <option value="">All Difficulties</option>
+                        <option value="MODERATE">Moderate</option>
+                        <option value="ADVANCED">Advanced</option>
+                        <option value="EXPERT">Expert</option>
+                        <option value="ELITE">Elite</option>
+                    </select>
+                </div>
+                
                 <p>${doctrines.length} saved doctrine${doctrines.length !== 1 ? 's' : ''}</p>
-                <div class="gallery-grid">
+                <div class="gallery-grid" id="galleryGrid">
         `;
 
         doctrines.forEach((doctrine, idx) => {
+            const displayName = doctrine.customName ? `${doctrine.customName} (${doctrine.nationName})` : doctrine.nationName || 'Unnamed Nation';
+            const versionStr = doctrine.version && doctrine.version > 1 ? ` v${doctrine.version}` : '';
+            const tagHTML = doctrine.tags && doctrine.tags.length > 0 
+                ? `<div class="doctrine-tags">${doctrine.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>`
+                : '';
+            
             html += `
-                <div class="gallery-card">
-                    <h3>${doctrine.nationName || 'Unnamed Nation'}</h3>
+                <div class="gallery-card" data-nation="${(doctrine.nationName || '').toLowerCase()}" data-doctrine="${(doctrine.matchedDoctrine || '').toLowerCase()}" data-difficulty="${doctrineData && doctrineData[doctrine.matchedDoctrine] ? doctrineData[doctrine.matchedDoctrine].difficulty : ''}">
+                    <h3>${displayName}${versionStr}</h3>
                     <p class="doctrine-name">${doctrine.matchedDoctrine || 'Custom Doctrine'}</p>
+                    ${tagHTML}
                     <p class="saved-date">Saved: ${new Date(doctrine.timestamp).toLocaleDateString()}</p>
                     <div class="gallery-actions">
                         <button onclick="pageManager.viewDoctrine(${idx})" class="gallery-btn">📖 View</button>
@@ -131,6 +151,34 @@ class PageManager {
         `;
 
         pageContent.innerHTML = html;
+        
+        // Setup filter listeners
+        const searchInput = document.getElementById('gallerySearch');
+        const difficultyFilter = document.getElementById('difficultyFilter');
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', () => this.filterGallery());
+        }
+        if (difficultyFilter) {
+            difficultyFilter.addEventListener('change', () => this.filterGallery());
+        }
+    }
+    
+    filterGallery() {
+        const searchTerm = (document.getElementById('gallerySearch')?.value || '').toLowerCase();
+        const difficultyFilter = document.getElementById('difficultyFilter')?.value || '';
+        const cards = document.querySelectorAll('.gallery-card');
+        
+        cards.forEach(card => {
+            const nation = card.dataset.nation || '';
+            const doctrine = card.dataset.doctrine || '';
+            const difficulty = card.dataset.difficulty || '';
+            
+            const matchesSearch = nation.includes(searchTerm) || doctrine.includes(searchTerm);
+            const matchesDifficulty = !difficultyFilter || difficulty === difficultyFilter;
+            
+            card.style.display = (matchesSearch && matchesDifficulty) ? 'block' : 'none';
+        });
     }
 
     loadComparePage() {
