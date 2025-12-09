@@ -139,7 +139,7 @@ function generateDoctrine() {
     const missingCategories = requiredCategories.filter(cat => !selections[cat]);
     
     if (missingCategories.length > 0) {
-        output.innerHTML = `<div class="warning">Please make a selection in all required sections before generating your doctrine.</div>`;
+        output.textContent = 'ERROR: Please make a selection in all required sections before generating your doctrine.';
         resultsSection.classList.add('visible');
         return;
     }
@@ -150,57 +150,70 @@ function generateDoctrine() {
     // Try to match to a named historical/alternate doctrine
     const matchedDoctrine = matchToNamedDoctrine();
     
+    const timestamp = new Date().toISOString();
+    doctrineText += `[${timestamp}] DOCTRINE GENERATION INITIATED\n`;
+    doctrineText += `[SYSTEM] Military Doctrine Compiler v1.0\n`;
+    doctrineText += `========================================\n\n`;
+    
     if (matchedDoctrine) {
-        doctrineText += `<h2>${matchedDoctrine.name}</h2>\n`;
-        doctrineText += `<p><strong>Strategic Maxim:</strong> "${matchedDoctrine.maxim}"</p>\n`;
-        doctrineText += `<p><strong>Overview:</strong> ${matchedDoctrine.description}</p>\n\n`;
+        doctrineText += `[MATCH FOUND] >> ${matchedDoctrine.name}\n`;
+        doctrineText += `\n>>> STRATEGIC MAXIM\n    "${matchedDoctrine.maxim}"\n`;
+        doctrineText += `\n>>> DOCTRINE OVERVIEW\n    ${matchedDoctrine.description}\n`;
         
-        doctrineText += `<h3>Strengths</h3>\n`;
+        doctrineText += `\n>>> OPERATIONAL STRENGTHS\n`;
         matchedDoctrine.strengths.forEach(strength => {
-            doctrineText += `<p>• ${strength}</p>\n`;
+            doctrineText += `    [+] ${strength}\n`;
         });
         
-        doctrineText += `<h3>Weaknesses</h3>\n`;
+        doctrineText += `\n>>> OPERATIONAL WEAKNESSES\n`;
         matchedDoctrine.weaknesses.forEach(weakness => {
-            doctrineText += `<p>• ${weakness}</p>\n`;
+            doctrineText += `    [-] ${weakness}\n`;
         });
         
-        doctrineText += `<h3>Your Doctrine Components</h3>\n`;
+        doctrineText += `\n>>> COMPONENT BREAKDOWN\n`;
     } else {
-        doctrineText += `<h2>Custom Military Doctrine</h2>\n`;
-        doctrineText += `<p>Your nation has forged a unique military doctrine combining diverse elements:</p>\n\n`;
+        doctrineText += `[UNIQUE] Custom military doctrine generated\n`;
+        doctrineText += `    Your nation has forged a unique doctrine combining diverse elements.\n`;
+        doctrineText += `\n>>> COMPONENT BREAKDOWN\n`;
     }
     
-    doctrineText += `<h3>⚔️ CORE PHILOSOPHY</h3>\n`;
-    doctrineText += `<p>${doctrineContent.philosophy[selections.philosophy].title}: ${doctrineContent.philosophy[selections.philosophy].summary}</p>\n\n`;
+    const philosophy = doctrineContent.philosophy[selections.philosophy];
+    doctrineText += `\n[PHILOSOPHY] ${philosophy.title}\n    ${philosophy.summary}\n    Doctrine Vector: ${selections.philosophy.toUpperCase()}\n`;
     
-    doctrineText += `<h3>🏛️ FORCE STRUCTURE</h3>\n`;
-    doctrineText += `<p>${doctrineContent.structure[selections.structure].title}: ${doctrineContent.structure[selections.structure].summary}</p>\n\n`;
+    const structure = doctrineContent.structure[selections.structure];
+    doctrineText += `\n[FORCE STRUCTURE] ${structure.title}\n    ${structure.summary}\n    Composition: ${selections.structure.toUpperCase()}\n`;
     
-    doctrineText += `<h3>🎯 PRIMARY DOMAIN</h3>\n`;
-    doctrineText += `<p>${doctrineContent.domain[selections.domain].title}: ${doctrineContent.domain[selections.domain].summary}</p>\n\n`;
+    const domain = doctrineContent.domain[selections.domain];
+    doctrineText += `\n[DOMAIN FOCUS] ${domain.title}\n    ${domain.summary}\n    Primary Theater: ${selections.domain.toUpperCase()}\n`;
     
-    doctrineText += `<h3>⚔️ TACTICAL APPROACH</h3>\n`;
-    doctrineText += `<p>${doctrineContent.tactics[selections.tactics].title}: ${doctrineContent.tactics[selections.tactics].summary}</p>\n\n`;
+    const tactics = doctrineContent.tactics[selections.tactics];
+    doctrineText += `\n[TACTICAL DOCTRINE] ${tactics.title}\n    ${tactics.summary}\n    Engagement Model: ${selections.tactics.toUpperCase()}\n`;
     
-    doctrineText += `<h3>🔧 TECHNOLOGY & EQUIPMENT</h3>\n`;
-    doctrineText += `<p>${doctrineContent.technology[selections.technology].title}: ${doctrineContent.technology[selections.technology].summary}</p>\n\n`;
+    const technology = doctrineContent.technology[selections.technology];
+    doctrineText += `\n[TECHNOLOGY LEVEL] ${technology.title}\n    ${technology.summary}\n    Equipment Standard: ${selections.technology.toUpperCase()}\n`;
     
-    doctrineText += `<h3>📋 COMMAND STRUCTURE</h3>\n`;
-    doctrineText += `<p>${doctrineContent.command[selections.command].title}: ${doctrineContent.command[selections.command].summary}</p>\n\n`;
+    const command = doctrineContent.command[selections.command];
+    doctrineText += `\n[COMMAND AUTHORITY] ${command.title}\n    ${command.summary}\n    Control Model: ${selections.command.toUpperCase()}\n`;
     
-    doctrineText += `<h3>📦 LOGISTICS</h3>\n`;
-    doctrineText += `<p>${doctrineContent.logistics[selections.logistics].title}: ${doctrineContent.logistics[selections.logistics].summary}</p>\n\n`;
+    const logistics = doctrineContent.logistics[selections.logistics];
+    doctrineText += `\n[LOGISTICS FRAMEWORK] ${logistics.title}\n    ${logistics.summary}\n    Supply Method: ${selections.logistics.toUpperCase()}\n`;
     
     // Special characteristics (if any selected)
     if (selections.special.length > 0) {
-        doctrineText += `<h3>⭐ SPECIAL CHARACTERISTICS</h3>\n`;
+        doctrineText += `\n[SPECIAL CHARACTERISTICS]\n`;
         selections.special.forEach(trait => {
-            doctrineText += `<p>• ${doctrineContent.special[trait].title}: ${doctrineContent.special[trait].summary}</p>\n`;
+            const special = doctrineContent.special[trait];
+            doctrineText += `    [*] ${special.title}\n        ${special.summary}\n`;
         });
+    } else {
+        doctrineText += `\n[SPECIAL CHARACTERISTICS] NONE SELECTED\n`;
     }
     
-    output.innerHTML = doctrineText;
+    doctrineText += `\n========================================\n`;
+    doctrineText += `[SUCCESS] Doctrine compilation complete\n`;
+    doctrineText += `[${timestamp}] DOCTRINE GENERATION COMPLETE\n`;
+    
+    output.textContent = doctrineText;
     resultsSection.classList.add('visible');
     
     // Scroll to results
@@ -292,10 +305,8 @@ function copyToClipboard() {
     const output = document.getElementById('doctrine-output');
     const copyBtn = document.getElementById('copyBtn');
     
-    // Get text content (strip HTML)
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = output.innerHTML;
-    const textContent = tempDiv.textContent || tempDiv.innerText;
+    // Get text content directly (now using textContent)
+    const textContent = output.textContent;
     
     navigator.clipboard.writeText(textContent).then(() => {
         copyBtn.textContent = '✓ Copied!';
