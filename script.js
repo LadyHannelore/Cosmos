@@ -15,6 +15,9 @@ const selections = {
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize multi-page system
+    window.pageManager = new PageManager();
+    
     initializeCards();
     initializeButtons();
     updateCardContent();
@@ -127,12 +130,19 @@ function initializeButtons() {
     document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
     document.getElementById('printBtn').addEventListener('click', printDoctrine);
     document.getElementById('shareBtn').addEventListener('click', shareDoctrine);
+    document.getElementById('saveBtn').addEventListener('click', saveDoctrine);
+    document.getElementById('exportBtn').addEventListener('click', exportDoctrine);
+    document.getElementById('importBtn').addEventListener('click', () => {
+        document.getElementById('importFile').click();
+    });
+    document.getElementById('importFile').addEventListener('change', importDoctrine);
 }
 
 // Generate the doctrine summary
 function generateDoctrine() {
     const resultsSection = document.getElementById('results');
     const output = document.getElementById('doctrine-output');
+    const nationName = document.getElementById('nationName').value.trim() || 'Your Nation';
     
     // Check if minimum selections are made
     const requiredCategories = ['philosophy', 'structure', 'domain', 'tactics', 'technology', 'command', 'logistics'];
@@ -149,14 +159,17 @@ function generateDoctrine() {
     
     // Try to match to a named historical/alternate doctrine
     const matchedDoctrine = matchToNamedDoctrine();
+    lastMatchedDoctrine = matchedDoctrine ? matchedDoctrine.name : null;
     
     const timestamp = new Date().toISOString();
     doctrineText += `[${timestamp}] DOCTRINE GENERATION INITIATED\n`;
+    doctrineText += `[NATION] ${nationName}\n`;
     doctrineText += `[SYSTEM] Military Doctrine Compiler v1.0\n`;
     doctrineText += `========================================\n\n`;
     
     if (matchedDoctrine) {
         doctrineText += `[MATCH FOUND] >> ${matchedDoctrine.name}\n`;
+        doctrineText += `[DIFFICULTY] ${matchedDoctrine.difficulty}\n`;
         doctrineText += `\n>>> STRATEGIC MAXIM\n    "${matchedDoctrine.maxim}"\n`;
         doctrineText += `\n>>> DOCTRINE OVERVIEW\n    ${matchedDoctrine.description}\n`;
         
@@ -222,9 +235,6 @@ function generateDoctrine() {
 
 // Attempt to match selections to a named historical doctrine
 function matchToNamedDoctrine() {
-    // Simple matching based on combinations
-    // This can be expanded with more sophisticated matching logic
-    
     const philosophy = selections.philosophy;
     const structure = selections.structure;
     const domain = selections.domain;
@@ -233,48 +243,88 @@ function matchToNamedDoctrine() {
     const command = selections.command;
     const logistics = selections.logistics;
     
-    // Massive Retaliation match
-    if (philosophy === 'offensive' && structure === 'professional' && technology === 'cutting-edge' && 
-        domain === 'air' && command === 'centralized') {
+    // A-1: Massive Retaliation - Nuclear deterrence, air-centric
+    if (philosophy === 'offensive' && technology === 'cutting-edge' && domain === 'air' && command === 'centralized') {
         return namedDoctrines['A-1'];
     }
     
-    // Sandys Logic match
-    if (domain === 'air' && technology === 'cutting-edge' && structure === 'professional' && 
-        command === 'centralized') {
+    // A-2: Sandys Logic - Air-centric, technological superiority
+    if (domain === 'air' && technology === 'cutting-edge' && command === 'centralized' && tactics === 'maneuver') {
         return namedDoctrines['A-2'];
     }
     
-    // Pentomic Division match
-    if (technology === 'cutting-edge' && structure === 'professional' && tactics === 'maneuver' && 
-        command === 'decentralized') {
+    // A-3: Pentomic Division - Cutting edge, professional, decentralized
+    if (technology === 'cutting-edge' && structure === 'professional' && command === 'decentralized') {
         return namedDoctrines['A-3'];
     }
     
-    // Deep Battle match
-    if (structure === 'conscript' && philosophy === 'offensive' && tactics === 'attrition' && 
-        command === 'centralized' && domain === 'land') {
+    // B-1: Deep Battle - Conscript, offensive, attrition, centralized, land
+    if (structure === 'conscript' && philosophy === 'offensive' && tactics === 'attrition' && command === 'centralized' && domain === 'land') {
         return namedDoctrines['B-1'];
     }
     
-    // Mobile Warfare match
-    if (structure === 'professional' && domain === 'land' && tactics === 'maneuver' && 
-        command === 'decentralized' && logistics === 'light') {
+    // B-2: Mobile Warfare - Professional, land, maneuver, decentralized, light logistics
+    if (structure === 'professional' && domain === 'land' && tactics === 'maneuver' && command === 'decentralized' && logistics === 'light') {
         return namedDoctrines['B-2'];
     }
     
-    // People's War match
+    // B-3: Diesel Juggernaut - Heavy armor, attrition tactics, modern tech
+    if (tactics === 'attrition' && logistics === 'heavy' && technology === 'modern' && domain === 'land') {
+        return namedDoctrines['B-3'];
+    }
+    
+    // C-1: Superior Firepower - Land attrition doctrine, heavy logistics, modern/cutting-edge
+    if (domain === 'land' && tactics === 'attrition' && logistics === 'heavy' && command === 'centralized') {
+        return namedDoctrines['C-1'];
+    }
+    
+    // C-2: Chemical/Biopunk - Guerrilla or attrition with practical tech
+    if ((tactics === 'guerrilla' || tactics === 'attrition') && philosophy === 'offensive' && technology === 'practical') {
+        return namedDoctrines['C-2'];
+    }
+    
+    // D-1: People's War - Militia, defensive, guerrilla
     if (structure === 'militia' && philosophy === 'defensive' && tactics === 'guerrilla') {
         return namedDoctrines['D-1'];
     }
     
-    // Superior Firepower match
-    if (domain === 'land' && tactics === 'attrition' && technology === 'modern' && 
-        command === 'centralized' && logistics === 'heavy') {
-        return namedDoctrines['C-1'];
+    // D-2: Guerre Révolutionnaire - Conscript or militia, defensive, focused on command control
+    if ((structure === 'conscript' || structure === 'militia') && philosophy === 'defensive' && command === 'centralized') {
+        return namedDoctrines['D-2'];
+    }
+    
+    // E-1: Fast & Light - Professional, light logistics, maneuver, expeditionary
+    if (structure === 'professional' && logistics === 'light' && tactics === 'maneuver' && philosophy === 'expeditionary') {
+        return namedDoctrines['E-1'];
+    }
+    
+    // E-2: Fortress Nation - Defensive, heavy logistics, siege tactics
+    if (philosophy === 'defensive' && tactics === 'siegecraft' && logistics === 'heavy') {
+        return namedDoctrines['E-2'];
+    }
+    
+    // F-1: Asymmetric Insurgency - Militia, guerrilla, defensive, practical tech
+    if (structure === 'militia' && tactics === 'guerrilla' && philosophy === 'defensive' && technology === 'practical') {
+        return namedDoctrines['F-1'];
+    }
+    
+    // F-2: Cyber-Dominance - Cutting edge technology, decentralized command, balanced philosophy
+    if (technology === 'cutting-edge' && command === 'decentralized' && philosophy === 'balanced' && tactics === 'maneuver') {
+        return namedDoctrines['F-2'];
+    }
+    
+    // G-1: Hybrid Threat - Combined arms focus with multiple characteristics
+    if (domain === 'combined' && (selections.special.length >= 3)) {
+        return namedDoctrines['G-1'];
+    }
+    
+    // G-2: Expeditionary Capitalism - Professional expeditionary with heavy logistics
+    if (philosophy === 'expeditionary' && structure === 'professional' && logistics === 'heavy') {
+        return namedDoctrines['G-2'];
     }
     
     return null;
+}
 }
 
 // Reset all selections
@@ -369,6 +419,64 @@ function shareDoctrine() {
 //    - Add the category to 'requiredCategories' in generateDoctrine() if required
 //    - Add output generation in generateDoctrine()
 //
+
+// Save Doctrine Function
+let lastGeneratedOutput = '';
+let lastMatchedDoctrine = null;
+
+function saveDoctrine() {
+    const output = document.getElementById('doctrine-output');
+    
+    if (!output.textContent.trim()) {
+        alert('Please generate a doctrine first before saving!');
+        return;
+    }
+    
+    const nationName = document.getElementById('nationName').value.trim() || 'Unnamed Nation';
+    const doctrineData = {
+        nationName: nationName,
+        selections: JSON.parse(JSON.stringify(selections)),
+        matchedDoctrine: lastMatchedDoctrine,
+        fullOutput: output.textContent,
+        timestamp: new Date().toISOString()
+    };
+    
+    DoctrineStorage.saveDoctrine(doctrineData);
+    alert(`Doctrine for "${nationName}" saved successfully!`);
+}
+
+// Export Doctrine as JSON
+function exportDoctrine() {
+    const json = DoctrineStorage.exportAsJSON();
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `doctrines-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Import Doctrine from JSON
+function importDoctrine(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const json = e.target.result;
+        if (DoctrineStorage.importFromJSON(json)) {
+            alert('Doctrines imported successfully!');
+            // Reset file input
+            event.target.value = '';
+        } else {
+            alert('Failed to import doctrines. Please check the JSON file format.');
+        }
+    };
+    reader.readAsText(file);
+}
 // 4. To make a category multi-select:
 //    - Add 'multi-select' class to the options-grid
 //    - Initialize the category as an array in 'selections'

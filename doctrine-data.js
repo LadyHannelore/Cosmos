@@ -193,6 +193,26 @@ const doctrineContent = {
             title: "Cavalry Tradition",
             description: "Mounted forces holding special significance",
             summary: "Mounted forces (traditional or modern equivalent) hold special prestige and tactical importance in national military tradition."
+        },
+        armor: {
+            title: "Armor Emphasis",
+            description: "Mechanized and armored forces as doctrine core",
+            summary: "The military doctrine places heavy emphasis on armored and mechanized forces. Tanks form the backbone of ground operations."
+        },
+        airborne: {
+            title: "Airborne Capability",
+            description: "Rapid deployment via aircraft",
+            summary: "Specialized airborne forces capable of rapid deployment and insertion by aircraft. Strategic rapid response capability."
+        },
+        infiltration: {
+            title: "Infiltration Tactics",
+            description: "Deep penetration and rear area operations",
+            summary: "Doctrine emphasizes infiltration of enemy lines and operations in rear areas. Breaking the front rather than holding it."
+        },
+        mobilization: {
+            title: "Total Mobilization",
+            description: "Rapid mobilization of civilian forces",
+            summary: "The nation maintains systems for rapid mobilization of civilian forces for military service. Total war capability."
         }
     }
 };
@@ -202,72 +222,130 @@ const namedDoctrines = {
     "A-1": {
         name: "Massive Retaliation (The 'New Look')",
         maxim: "More Bang for the Buck",
+        difficulty: "EXPERT",
         description: "A doctrine based on the Eisenhower administration's policy. Facing numerically superior enemies, the nation relies on nuclear deterrence rather than conventional forces. Local defenses are merely a 'tripwire' for total retaliation.",
-        strengths: ["Nuclear Deterrence", "Psychological Intimidation", "Low Conventional Manpower"],
-        weaknesses: ["Inflexibility", "Lacks tools for small conflicts", "Risk of escalation"]
+        strengths: ["Nuclear Deterrence", "Psychological Intimidation", "Low Conventional Manpower", "Cost Efficient"],
+        weaknesses: ["Inflexibility", "Lacks tools for small conflicts", "Risk of escalation", "Requires nuclear arsenal"]
     },
     "A-2": {
         name: "Sandys Logic (Technocratic Interdiction)",
         maxim: "The Pilot is Obsolete",
+        difficulty: "ELITE",
         description: "Based on the British 1957 Defence White Paper. War is a mathematical equation solved by guidance systems. Manned fighters are replaced by guided missiles and SAM grids.",
-        strengths: ["Technological Superiority", "Airspace Denial", "Low Manpower Requirements"],
-        weaknesses: ["Vulnerable to Electronic Warfare", "No human fallback", "Research-intensive"]
+        strengths: ["Technological Superiority", "Airspace Denial", "Low Manpower Requirements", "Automated Defense"],
+        weaknesses: ["Vulnerable to Electronic Warfare", "No human fallback", "Research-intensive", "Expensive to maintain"]
     },
     "A-3": {
         name: "Pentomic Division (Nuclear Dispersion)",
         maxim: "Dispersion is Survival",
+        difficulty: "ELITE",
         description: "The US Army's response to tactical nuclear warfare. Rather than concentrated forces, the division operates as five independent Battle Groups, each equipped with tactical nuclear weapons.",
-        strengths: ["Survivability in nuclear environment", "Flexible tactics", "Self-sufficient units"],
-        weaknesses: ["Logistical nightmare", "Command and control chaos", "Vulnerable to conventional forces"]
+        strengths: ["Survivability in nuclear environment", "Flexible tactics", "Self-sufficient units", "Nuclear Resilience"],
+        weaknesses: ["Logistical nightmare", "Command and control chaos", "Vulnerable to conventional forces", "Complex coordination"]
     },
     "B-1": {
         name: "Deep Battle (The 'Red Steamroller')",
         maxim: "Catastrophic Systemic Failure",
+        difficulty: "ADVANCED",
         description: "Soviet doctrine emphasizing simultaneous attacks across the entire front depth. Unlike narrow breakthroughs, Deep Battle paralyzes enemy response through coordinated assaults.",
-        strengths: ["Overwhelming Offense", "Systemic Paralysis", "High Reinforcement Rates"],
-        weaknesses: ["Requires strict centralization", "Vulnerable to ambush", "Logistically demanding"]
+        strengths: ["Overwhelming Offense", "Systemic Paralysis", "High Reinforcement Rates", "Breakthrough Capability"],
+        weaknesses: ["Requires strict centralization", "Vulnerable to ambush", "Logistically demanding", "Slow to adapt"]
     },
     "B-2": {
         name: "Mobile Warfare (The 'Iron Spearhead')",
         maxim: "Speed is Armor",
+        difficulty: "ADVANCED",
         description: "Derived from German Bewegungskrieg. Defense is conducted aggressively with rapid counter-attacks. Combined arms at the lowest level with high emphasis on radio communication.",
-        strengths: ["Tactical Flexibility", "Rapid Response", "Aggressive Defense"],
-        weaknesses: ["Fuel-intensive", "Complex logistics", "Requires trained officers"]
+        strengths: ["Tactical Flexibility", "Rapid Response", "Aggressive Defense", "Battlefield Initiative"],
+        weaknesses: ["Fuel-intensive", "Complex logistics", "Requires trained officers", "Supply dependent"]
     },
     "B-3": {
         name: "Diesel Juggernaut (Landship Doctrine)",
         maxim: "The Fortress that Moves",
+        difficulty: "EXPERT",
         description: "An alternate-history doctrine featuring super-heavy tanks and armored trains. In a timeline where armor advanced faster than anti-tank weapons, these mobile fortresses dominate.",
-        strengths: ["Unstoppable Momentum", "Fortress Protection", "Psychological Impact"],
-        weaknesses: ["Slow Speed", "Fuel consumption", "Vulnerable to air power"]
+        strengths: ["Unstoppable Momentum", "Fortress Protection", "Psychological Impact", "Armor Dominance"],
+        weaknesses: ["Slow Speed", "Fuel consumption", "Vulnerable to air power", "High maintenance"]
     },
     "C-1": {
         name: "Superior Firepower (Active Defense)",
         maxim: "Steel Rain",
+        difficulty: "MODERATE",
         description: "Standard Western doctrine relying on wealth to expend ammunition rather than blood. Massive organic fire support and tactical air assets dominate the battlefield.",
-        strengths: ["Massive Firepower", "Air Support Integration", "Proven Western doctrine"],
-        weaknesses: ["Requires industrial capacity", "Slow movement", "Supply-dependent"]
+        strengths: ["Massive Firepower", "Air Support Integration", "Proven Western doctrine", "Casualty Efficient"],
+        weaknesses: ["Requires industrial capacity", "Slow movement", "Supply-dependent", "Expensive ammunition"]
     },
     "C-2": {
         name: "Chemical/Biopunk Front (Area Denial)",
         maxim: "The Silent Spring",
+        difficulty: "EXPERT",
         description: "An alternate doctrine focusing on making the battlefield uninhabitable. Gas troops in hazmat gear and biological agents create zones of denial.",
-        strengths: ["Area Denial", "Psychological Terror", "Unique capabilities"],
-        weaknesses: ["International pariah status", "Indiscriminate effects", "Risk of backblast"]
+        strengths: ["Area Denial", "Psychological Terror", "Unique capabilities", "Population Dispersal"],
+        weaknesses: ["International pariah status", "Indiscriminate effects", "Risk of backblast", "Difficult to control"]
     },
     "D-1": {
         name: "People's War (The Human Sea)",
         maxim: "Drowning the Enemy",
+        difficulty: "MODERATE",
         description: "Maoist doctrine emphasizing political will over military might. By mobilizing the peasantry and retreating into the countryside, the army becomes invisible and ubiquitous.",
-        strengths: ["Morale and Will", "Attrition Capability", "Population Mobilization"],
-        weaknesses: ["Lack of technology", "Long-term commitment required", "Vulnerable to concentrated force"]
+        strengths: ["Morale and Will", "Attrition Capability", "Population Mobilization", "Political Integration"],
+        weaknesses: ["Lack of technology", "Long-term commitment required", "Vulnerable to concentrated force", "Slow progress"]
     },
     "D-2": {
         name: "Guerre Révolutionnaire (Counter-Insurgency State)",
         maxim: "Pacification through Control",
+        difficulty: "ADVANCED",
         description: "The French response to People's War. Total control of the population's physical and mental environment through grid-based occupation and psychological warfare.",
-        strengths: ["Population Control", "Rapid Response", "Psychological Dominance"],
-        weaknesses: ["Political instability", "Requires military to govern", "Moral hazards"]
+        strengths: ["Population Control", "Rapid Response", "Psychological Dominance", "Grid-based Security"],
+        weaknesses: ["Political instability", "Requires military to govern", "Moral hazards", "Resource intensive"]
+    },
+    "E-1": {
+        name: "Fast & Light (Rapid Reaction Doctrine)",
+        maxim: "Speed Beats Strength",
+        difficulty: "MODERATE",
+        description: "Modern doctrine emphasizing rapid deployment, light mechanization, and high mobility. Small professional forces deployed globally for quick response.",
+        strengths: ["Fast Deployment", "Global Reach", "Flexible Response", "Rapid Mobilization"],
+        weaknesses: ["Limited sustained combat power", "Requires logistics network", "Vulnerable to heavy forces", "Manpower limitations"]
+    },
+    "E-2": {
+        name: "Fortress Nation (Total Defense)",
+        maxim: "Our Land is Our Strength",
+        difficulty: "MODERATE",
+        description: "Doctrine emphasizing the defense of homeland through fortification, civil defense, and total mobilization. Every citizen is a defender.",
+        strengths: ["Defensive Strength", "Mobilization Capability", "Civil-Military Integration", "Homeland Advantage"],
+        weaknesses: ["No offensive capability", "Requires mobilization time", "Limited power projection", "Vulnerable to blockade"]
+    },
+    "F-1": {
+        name: "Asymmetric Insurgency (David's Doctrine)",
+        maxim: "The Mighty Fall Slow",
+        difficulty: "MODERATE",
+        description: "Doctrine designed for smaller nations resisting larger powers. Focus on making occupation costly, political warfare, and protracted conflict.",
+        strengths: ["Attrition of Occupier", "Political Resistance", "Unconventional Advantage", "Cost Imposition"],
+        weaknesses: ["Cannot seize territory", "No conventional victory possible", "Requires population support", "Long time horizon"]
+    },
+    "F-2": {
+        name: "Cyber-Dominance (Digital Warfare State)",
+        maxim: "The Code is the Weapon",
+        difficulty: "ELITE",
+        description: "Futuristic doctrine where cyber operations, information warfare, and network disruption form the primary battlefield. Conventional forces are secondary.",
+        strengths: ["Information Control", "Infrastructure Disruption", "Deniable Operations", "Psychological Warfare"],
+        weaknesses: ["Requires technological superiority", "Vulnerable to air power", "Physical defense weak", "Attribution difficult"]
+    },
+    "G-1": {
+        name: "Hybrid Threat (Multi-Domain Warfare)",
+        maxim: "War on All Fronts",
+        difficulty: "EXPERT",
+        description: "Integration of conventional military, irregulars, cyber, information, and economic warfare. Blurs the line between war and peace.",
+        strengths: ["Multi-Domain Integration", "Psychological Confusion", "Deniability", "Resilience"],
+        weaknesses: ["Difficult to counter unified response", "Requires coordination", "Attribution challenges", "Risk of escalation"]
+    },
+    "G-2": {
+        name: "Expeditionary Capitalism (Corporate-Military State)",
+        maxim: "Commerce Follows the Flag",
+        difficulty: "ADVANCED",
+        description: "Doctrine where military power serves primarily to expand trade and secure resources. Military-industrial fusion drives national strategy.",
+        strengths: ["Economic Leverage", "Trade Protection", "Global Presence", "Industrial Backing"],
+        weaknesses: ["Economically dependent", "Vulnerable to trade disruption", "High cost", "Political instability"]
     }
 };
 

@@ -1,6 +1,6 @@
 # 🕵️ Military Doctrine Builder - 1959 Alternate History
 
-A comprehensive web application for designing military doctrines for Nation Roleplay servers set in alternate 1959 timelines. Build your nation's military strategy and get matched against 10 historical and alternate doctrines.
+A comprehensive web application for designing military doctrines for Nation Roleplay servers set in alternate 1959 timelines. Build your nation's military strategy and get matched against 16 historical and alternate doctrines.
 
 **Live Demo**: Push to GitHub, enable Pages, and it's live at `https://yourusername.github.io/Cosmos`
 
@@ -25,8 +25,8 @@ Just open `index.html` in any modern browser. That's it!
 
 ### 🎯 Core Functionality
 - **8 Doctrine Categories**: Philosophy, Force Structure, Domain, Tactics, Technology, Command, Logistics, Special Characteristics
-- **10 Named Doctrines**: Your choices are matched against historical doctrines (Massive Retaliation, Deep Battle, Mobile Warfare, People's War, etc.)
-- **27 UI/UX Features**: Progress bars, theme toggle, tooltips, print support, sharing, and more
+- **16 Named Doctrines**: Your choices are matched against historical doctrines (A-1 through G-2 difficulty ratings)
+- **27+ UI/UX Features**: Progress bars, theme toggle, tooltips, print support, sharing, multi-page navigation, and more
 
 ### 📊 Categories
 
@@ -39,15 +39,18 @@ Just open `index.html` in any modern browser. That's it!
 | **Technology** | Cutting-Edge, Modern, Practical, Legacy | Equipment level |
 | **Command** | Centralized, Decentralized, Rigid, Flexible | Decision-making |
 | **Logistics** | Heavy, Light, Forage, Depot | Supply method |
-| **Special** | Elite Units, Intelligence, Psyops, Engineering, Marines, Cavalry | Bonus traits |
+| **Special** | Elite Units, Intelligence, Psyops, Engineering, Marines, Cavalry, Armor, Airborne, Infiltration, Mobilization | Bonus traits |
 
-### 🎨 UI/UX Features (27 Total)
-Progress Bar • Completion Badges • Tooltip Icons • Theme Toggle • Responsive Design • Copy Button • Print Button • Share Button • Smooth Animations • Keyboard Navigation • Doctrine Matching • Strengths/Weaknesses • Multi-select Options • Selection Counter • Info Boxes • And 12 more...
+### 🎨 UI/UX Features (27+)
+Progress Bar • Completion Badges • Tooltip Icons • Theme Toggle • Responsive Design • Copy Button • Print Button • Share Button • Smooth Animations • Keyboard Navigation • Doctrine Matching • Strengths/Weaknesses • Multi-select Options • Selection Counter • Info Boxes • Multi-page Navigation • Save/Load Doctrines • Export as JSON • Import from JSON • Doctrine Gallery • Compare Tool • Evolution Timeline • Help Guide • And 5+ more...
 
 ### 📤 Export Options
 - **Copy to Clipboard** - Paste in Discord, forums, email
 - **Print to PDF** - Save or share as PDF
 - **Web Share API** - Native mobile sharing
+- **Save to Library** - Store doctrines in browser localStorage
+- **Export as JSON** - Download doctrine collection as backup
+- **Import from JSON** - Restore doctrine collection
 - **Print-Optimized** - Clean, readable formatting
 
 ---
@@ -77,38 +80,89 @@ Progress Bar • Completion Badges • Tooltip Icons • Theme Toggle • Respon
 
 ## 📚 Doctrine Matching
 
-Your selections are matched against these 10 historical/alternate doctrines:
+Your selections are matched against these 16 historical/alternate doctrines:
 
 ### Strategic-Nuclear Phylogeny
-- **A-1: Massive Retaliation** - Nuclear deterrence (\"More Bang for the Buck\")
-- **A-2: Sandys Doctrine** - Automated systems (\"The Pilot is Obsolete\")
-- **A-3: Pentomic Division** - Dispersed nuclear units (\"Dispersion is Survival\")
+- **A-1: Massive Retaliation** - Nuclear deterrence, expert-level doctrine
+- **A-2: Sandys Logic** - Technocratic interdiction, elite-level doctrine
+- **A-3: Pentomic Division** - Nuclear dispersion, elite-level doctrine
 
 ### Operational-Maneuver Phylogeny
-- **B-1: Deep Battle** - Simultaneous multi-layer attacks (\"Red Steamroller\")
-- **B-2: Mobile Warfare** - Rapid mechanized warfare (\"Iron Spearhead\")
-- **B-3: Diesel Juggernaut** - Super-heavy armor (alternate history)
+- **B-1: Deep Battle** - Soviet steamroller doctrine, advanced-level
+- **B-2: Mobile Warfare** - German Blitzkrieg tradition, advanced-level
+- **B-3: Diesel Juggernaut** - Alternate armor-focused doctrine, expert-level
 
 ### Firepower-Attrition Phylogeny
-- **C-1: Superior Firepower** - Massive artillery focus (\"Steel Rain\")
-- **C-2: Chemical/Biopunk** - Area denial weapons (alternate history)
+- **C-1: Superior Firepower** - Western active defense, moderate-level
+- **C-2: Chemical/Biopunk** - Area denial systems, expert-level
 
 ### Asymmetric-Revolutionary Phylogeny
-- **D-1: People's War** - Population-based guerrilla (\"Human Sea\")
-- **D-2: Guerre Révolutionnaire** - Counter-insurgency control
+- **D-1: People's War** - Maoist population mobilization, moderate-level
+- **D-2: Guerre Révolutionnaire** - French counter-insurgency, advanced-level
 
-Each matched doctrine shows: Strategic Maxim • Description • Strengths • Weaknesses
+### Modern-Expeditionary Phylogeny
+- **E-1: Fast & Light** - Rapid deployment doctrine, moderate-level
+- **E-2: Fortress Nation** - Total homeland defense, moderate-level
+
+### Resistance-Asymmetric Phylogeny
+- **F-1: Asymmetric Insurgency** - David vs Goliath doctrine, moderate-level
+- **F-2: Cyber-Dominance** - Digital warfare state, elite-level
+
+### Integrated-Future Phylogeny
+- **G-1: Hybrid Threat** - Multi-domain warfare, expert-level
+- **G-2: Expeditionary Capitalism** - Military-industrial capitalism, advanced-level
+
+---
+
+## 📊 Doctrine Details
+
+### Difficulty Ratings
+- **MODERATE** - Easier to master, proven strategies
+- **ADVANCED** - Complex coordination, modern systems
+- **EXPERT** - Specialized approach, unique challenges
+- **ELITE** - Cutting-edge or highly experimental
+
+Each doctrine includes:
+- **Strategic Maxim** - Core philosophy in one sentence
+- **4 Operational Strengths** - What this doctrine does well
+- **4 Operational Weaknesses** - Vulnerabilities and challenges
+
+---
+
+## 🎮 How to Use
+
+### For Players
+1. **Open the app** - Click link your GM provides
+2. **Select choices** - Answer 8 questions about your military
+3. **Watch progress** - See the green checkmarks and progress bar
+4. **Generate doctrine** - Click "Generate Doctrine Summary"
+5. **Export** - Copy, print, or share your doctrine
+6. **Save** - Store in your browser or export as JSON
+
+### For Game Masters
+1. **Deploy** - Follow Quick Start above (2 minutes)
+2. **Share link** - Send to your Nation RP community
+3. **Players use it** - They generate and save their doctrines
+4. **Roleplay consequences** - Use doctrines to guide military behavior
+5. **Track evolution** - See how doctrines change with the timeline
+
+### For Developers
+1. **Customize** - Edit `doctrine-data.js` to add doctrines
+2. **Change colors** - Edit `:root` variables in `styles.css`
+3. **Add categories** - Follow the patterns in HTML/JS
+4. **Deploy** - Works on any static hosting (GitHub Pages, Netlify, etc.)
 
 ---
 
 ## 🛠️ Technical Details
 
 ### What You Get
-- **4 Application Files** (70 KB total)
+- **5 Application Files** (100 KB total)
   - `index.html` - Page structure
-  - `styles.css` - Styling + responsive design
-  - `script.js` - All interactivity
-  - `doctrine-data.js` - All content data
+  - `styles.css` - Styling + responsive design + multi-page layouts
+  - `script.js` - All interactivity and generation logic
+  - `pages.js` - Multi-page navigation and doctrine storage
+  - `doctrine-data.js` - All doctrine and content data
 
 ### Requirements
 - **None!** Pure HTML/CSS/JavaScript
@@ -118,10 +172,24 @@ Each matched doctrine shows: Strategic Maxim • Description • Strengths • W
 ✅ Chrome 90+ • ✅ Firefox 88+ • ✅ Safari 14+ • ✅ Edge 90+ • ✅ Mobile browsers
 
 ### Performance
-- **Total Size**: 70 KB
+- **Total Size**: ~100 KB (5 files)
 - **Load Time**: <100ms on most connections
-- **Zero Dependencies**: No external libraries
+- **Zero Dependencies**: No external libraries or frameworks
 - **Offline Ready**: Works without internet after first load
+- **Storage**: Uses browser localStorage for doctrine persistence (unlimited for most browsers)
+
+### Multi-Page System
+The application includes 5 pages accessed via navigation bar:
+- **Builder** - Create and customize doctrines
+- **Gallery** - View, delete, and manage saved doctrines
+- **Compare** - Side-by-side comparison of two doctrines
+- **History** - Timeline view of doctrine evolution
+- **Guide** - Help documentation and usage tips
+
+### Data Persistence
+- Doctrines saved to browser localStorage (persists after closing browser)
+- Export/Import functionality via JSON files for backup and sharing
+- DoctrineStorage class manages all data operations
 
 ---
 
@@ -132,16 +200,17 @@ Each matched doctrine shows: Strategic Maxim • Description • Strengths • W
 Edit `doctrine-data.js` and add to `namedDoctrines`:
 
 ```javascript
-\"X-1\": {
-    name: \"Your Doctrine Name\",
-    maxim: \"Your Strategic Maxim\",
-    description: \"Your doctrine description...\",
-    strengths: [\"Strength 1\", \"Strength 2\"],
-    weaknesses: [\"Weakness 1\", \"Weakness 2\"]
+"X-1": {
+    name: "Your Doctrine Name",
+    maxim: "Your Strategic Maxim",
+    difficulty: "MODERATE",  // MODERATE, ADVANCED, EXPERT, ELITE
+    description: "Your doctrine description...",
+    strengths: ["Strength 1", "Strength 2", "Strength 3", "Strength 4"],
+    weaknesses: ["Weakness 1", "Weakness 2", "Weakness 3", "Weakness 4"]
 }
 ```
 
-Then add matching logic in `script.js` `matchToNamedDoctrine()` function.
+Then add matching logic in `script.js` in the `matchToNamedDoctrine()` function.
 
 ### Change Colors
 
@@ -149,22 +218,36 @@ Edit `:root` variables in `styles.css`:
 
 ```css
 :root {
-    --primary-color: #2c3e50;      /* Dark color */
-    --accent-color: #c0392b;       /* Alert color */
-    --gold-color: #d4af37;         /* Accents */
+    --bg-dark-primary: #0a1428;     /* Primary dark background */
+    --bg-dark-secondary: #2d5a3d;   /* Secondary dark background */
+    --accent-color: #dc143c;        /* Alert/highlight color */
+    --gold-color: #d4af37;          /* Accent color */
+    --text-color: #e0e0e0;          /* Primary text */
+    --secondary-text-color: #b0b0b0; /* Secondary text */
     /* ...etc... */
 }
 ```
 
+The same variables work for both light and dark themes via `.light-theme` class.
+
 ### Add a New Category
 
-1. Add section to `index.html` with 4 option cards
+1. Add section to `index.html` with 4 option cards in the builder
 2. Add category to `doctrineContent` in `doctrine-data.js`
-3. Initialize category in `selections` object in `script.js`
+3. Initialize category in `selections` object in `script.js` 
 4. Add output generation in `generateDoctrine()` function
-5. Add to required categories check if mandatory
+5. Add to `requiredCategories` array if mandatory
+6. Update the matching algorithm in `matchToNamedDoctrine()` if needed
 
----
+### Add a New Page
+
+1. Create page HTML structure in `index.html` (the builder page is already wrapped)
+2. Add page name to `pages` array in `PageManager` constructor in `pages.js`
+3. Add title mapping in `getPageTitle()` method
+4. Create `load[PageName]Page()` method in `PageManager` class
+5. Add page-specific CSS styles in `styles.css`
+
+------
 
 ## 📖 File Structure
 

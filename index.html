@@ -10,6 +10,9 @@
     <!-- Theme Toggle -->
     <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode" aria-label="Toggle theme">🌙</button>
 
+    <!-- Navigation Bar -->
+    <nav id="main-nav" class="main-nav"></nav>
+
     <div class="container">
         <header>
             <h1>🏛️ Military Doctrine Builder</h1>
@@ -30,7 +33,14 @@
             <strong>💡 Tip:</strong> Your selections will be matched against historical and alternate 1959 military doctrines. When you generate your doctrine, you may discover a pre-existing doctrine that matches your choices!
         </div>
 
-        <main>
+        <!-- Nation Name Input -->
+        <div class="nation-input-section">
+            <input type="text" id="nationName" class="nation-input" placeholder="Enter your nation's name (optional)" maxlength="50">
+            <p class="nation-help">The nation name will appear at the top of your generated doctrine</p>
+        </div>
+
+        <!-- Builder Page Wrapper -->
+        <div id="page-builder" class="page">
             <!-- Section 1: Core Philosophy -->
             <section class="doctrine-section" id="section-philosophy">
                 <div class="section-header">
@@ -252,13 +262,36 @@
                         <h3>Cavalry Tradition</h3>
                         <p>Mounted forces holding special significance</p>
                     </div>
-                </div>
+                    <div class="option-card" data-value="armor">
+                        <h3>Armor Emphasis</h3>
+                        <p>Mechanized and armored forces as doctrine core</p>
+                    </div>
+                    <div class="option-card" data-value="airborne">
+                        <h3>Airborne Capability</h3>
+                        <p>Rapid deployment via aircraft</p>
+                    </div>
+                    <div class="option-card" data-value="infiltration">
+                        <h3>Infiltration Tactics</h3>
+                        <p>Deep penetration and rear area operations</p>
+                    </div>
+                    <div class="option-card" data-value="mobilization">
+                        <h3>Total Mobilization</h3>
+                        <p>Rapid mobilization of civilian forces</p>
+                    </div>
             </section>
 
             <!-- Generate Button -->
             <div class="generate-section">
                 <button id="generateBtn" class="generate-btn">Generate Doctrine Summary</button>
                 <button id="resetBtn" class="reset-btn">Reset All</button>
+                <button id="saveBtn" class="save-btn">💾 Save Doctrine</button>
+            </div>
+
+            <!-- Import/Export Section -->
+            <div class="import-export-section">
+                <button id="exportBtn" class="export-btn">📤 Export as JSON</button>
+                <button id="importBtn" class="import-btn">📥 Import from JSON</button>
+                <input type="file" id="importFile" accept=".json" style="display: none;">
             </div>
 
             <!-- Results Section -->
@@ -273,7 +306,7 @@
                     <button id="shareBtn" class="share-btn">📤 Share</button>
                 </div>
             </section>
-        </main>
+        </div><!-- End page-builder -->
 
         <footer>
             <p>Military Doctrine Builder for 1959 Alternate History Nation RP • Built with ⚔️ for immersive roleplay</p>
@@ -281,6 +314,7 @@
     </div>
 
     <script src="doctrine-data.js"></script>
+    <script src="pages.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
