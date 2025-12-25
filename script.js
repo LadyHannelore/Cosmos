@@ -394,7 +394,6 @@ function matchToNamedDoctrine() {
     
     return null;
 }
-}
 
 // Reset all selections
 function resetSelections() {
