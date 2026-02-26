@@ -1,451 +1,243 @@
-# 🕵️ Military Doctrine Builder - 1959 Alternate History
+# 🎮 Nation Reservation Discord Bot
 
-A comprehensive web application for designing military doctrines for Nation Roleplay servers set in alternate 1959 timelines. Build your nation's military strategy and get matched against 16 historical and alternate doctrines.
-
-**Live Demo**: Push to GitHub, enable Pages, and it's live at `https://yourusername.github.io/Cosmos`
-
----
-
-## ⚡ Quick Start (2 Minutes)
-
-### Deploy to GitHub Pages
-```bash
-git add .
-git commit -m "Military Doctrine Builder"
-git push origin main
-```
-Then go to **Settings → Pages → Source: main/root** and wait 1-2 minutes.
-
-### Use Locally
-Just open `index.html` in any modern browser. That's it!
-
----
+A Discord bot for managing nation and territory reservations in multiplayer games. Players can reserve nations/states, view current reservations, and admins can manage the system.
 
 ## ✨ Features
 
-### 🎯 Core Functionality
-- **8 Doctrine Categories**: Philosophy, Force Structure, Domain, Tactics, Technology, Command, Logistics, Special Characteristics
-- **16 Named Doctrines**: Your choices are matched against historical doctrines (A-1 through G-2 difficulty ratings)
-- **27+ UI/UX Features**: Progress bars, theme toggle, tooltips, print support, sharing, multi-page navigation, and more
+- 🗺️ Display all nation reservations organized by region
+- ✅ Reserve nations for yourself (one per player)
+- ❌ Unreserve your current nation anytime
+- 📋 List all available nations by region
+- 🗑️ Delete all reservations and messages when game ends
+- 🔧 Admin commands for managing the system
+- 💾 Persistent storage (reservations saved to JSON)
+- 🎯 Autocomplete suggestions when typing nation names
 
-### 📊 Categories
+## 📍 Available Regions
 
-| Category | Options | Purpose |
-|----------|---------|---------|
-| **Philosophy** | Defensive, Offensive, Balanced, Expeditionary | Military purpose |
-| **Structure** | Professional, Conscript, Militia, Hybrid | Force composition |
-| **Domain** | Land, Naval, Air, Combined | Branch priority |
-| **Tactics** | Maneuver, Attrition, Guerrilla, Siege | Combat approach |
-| **Technology** | Cutting-Edge, Modern, Practical, Legacy | Equipment level |
-| **Command** | Centralized, Decentralized, Rigid, Flexible | Decision-making |
-| **Logistics** | Heavy, Light, Forage, Depot | Supply method |
-| **Special** | Elite Units, Intelligence, Psyops, Engineering, Marines, Cavalry, Armor, Airborne, Infiltration, Mobilization | Bonus traits |
+- **Eastern States**: Washington D.C., Pennsylvania, Maryland, Massachusetts, Virginia, New York City, Rhode Island, North Carolina, South Carolina, Georgia, Florida
+- **Southern States**: Kentucky, Tennessee, Louisiana, New Orleans, Mississippi, Alabama, Arkansas, Oklahoma, Texas
+- **Western States**: California, Washington, Oregon, Colorado, Utah, Nevada, Alaska
+- **Midwest States**: Ohio
+- **Canadian Territories**: Ontario, Quebec, Alberta, British Columbia, Yukon Territory, St. Pierre and Miquelon
+- **Mexico & Central America**: Mexico, Cristeros, Cozumel
+- **Special Forces**: Japanese Navy At Midway, Soviet Navy At Aleutians, Navajo
+- **Miscellaneous Nations**: 6 slots for minor/custom nations
 
-### 🎨 UI/UX Features (27+)
-Progress Bar • Completion Badges • Tooltip Icons • Theme Toggle • Responsive Design • Copy Button • Print Button • Share Button • Smooth Animations • Keyboard Navigation • Doctrine Matching • Strengths/Weaknesses • Multi-select Options • Selection Counter • Info Boxes • Multi-page Navigation • Save/Load Doctrines • Export as JSON • Import from JSON • Doctrine Gallery • Compare Tool • Evolution Timeline • Help Guide • And 5+ more...
+## 📋 Commands
 
-### 📤 Export Options
-- **Copy to Clipboard** - Paste in Discord, forums, email
-- **Print to PDF** - Save or share as PDF
-- **Web Share API** - Native mobile sharing
-- **Save to Library** - Store doctrines in browser localStorage
-- **Export as JSON** - Download doctrine collection as backup
-- **Import from JSON** - Restore doctrine collection
-- **Print-Optimized** - Clean, readable formatting
+### 👥 User Commands
 
----
+| Command | Description | Example |
+|---------|-------------|---------|
+| `/reservations` | Display all current reservations | `/reservations` |
+| `/reserve <nation>` | Reserve a nation for yourself | `/reserve California` |
+| `/unreserve` | Remove your current reservation | `/unreserve` |
+| `/list_nations` | Show all available nations by region | `/list_nations` |
 
-## 🎮 How to Use
+### 🔑 Admin Commands (Requires Administrator Permission)
 
-### For Players
-1. **Open the app** - Click link your GM provides
-2. **Select choices** - Answer 8 questions about your military
-3. **Watch progress** - See the green checkmarks and progress bar
-4. **Generate doctrine** - Click "Generate Doctrine Summary"
-5. **Export** - Copy, print, or share your doctrine
+| Command | Description | Example |
+|---------|-------------|---------|
+| `/delete` | Clear all reservations and delete messages (use when game ends) | `/delete` |
+| `/clear_all` | Clear all reservations without deleting messages | `/clear_all` |
+| `/force_unreserve <nation>` | Force unreserve a specific nation | `/force_unreserve Texas` |
 
-### For Game Masters
-1. **Deploy** - Follow Quick Start above (2 minutes)
-2. **Share link** - Send to your Nation RP community
-3. **Players use it** - They generate their doctrines
-4. **Roleplay consequences** - Use doctrines to guide military behavior
+## 🚀 Setup Instructions
 
-### For Developers
-1. **Customize** - Edit `doctrine-data.js` to add doctrines
-2. **Change colors** - Edit `:root` variables in `styles.css`
-3. **Add categories** - Follow the patterns in HTML/JS
-4. **Deploy** - Works on any static hosting (GitHub Pages, Netlify, etc.)
+### Prerequisites
 
----
+- Python 3.8 or higher
+- A Discord account
+- Administrator access to a Discord server
 
-## 📚 Doctrine Matching
+### Step 1: Create a Discord Bot
 
-Your selections are matched against these 16 historical/alternate doctrines:
+1. Visit the [Discord Developer Portal](https://discord.com/developers/applications)
+2. Click **"New Application"** and name your bot
+3. Go to the **"Bot"** section in the left sidebar
+4. Click **"Add Bot"**
+5. Enable **"Message Content Intent"** under Privileged Gateway Intents
+6. Click **"Save Changes"**
 
-### Strategic-Nuclear Phylogeny
-- **A-1: Massive Retaliation** - Nuclear deterrence, expert-level doctrine
-- **A-2: Sandys Logic** - Technocratic interdiction, elite-level doctrine
-- **A-3: Pentomic Division** - Nuclear dispersion, elite-level doctrine
+### Step 2: Get Your Bot Token
 
-### Operational-Maneuver Phylogeny
-- **B-1: Deep Battle** - Soviet steamroller doctrine, advanced-level
-- **B-2: Mobile Warfare** - German Blitzkrieg tradition, advanced-level
-- **B-3: Diesel Juggernaut** - Alternate armor-focused doctrine, expert-level
+1. In the Bot section, click **"Reset Token"** (under TOKEN section)
+2. Click **"Copy"** to copy your token
+3. ⚠️ **Keep this token secret!** Never share it publicly
 
-### Firepower-Attrition Phylogeny
-- **C-1: Superior Firepower** - Western active defense, moderate-level
-- **C-2: Chemical/Biopunk** - Area denial systems, expert-level
+### Step 3: Invite Bot to Your Server
 
-### Asymmetric-Revolutionary Phylogeny
-- **D-1: People's War** - Maoist population mobilization, moderate-level
-- **D-2: Guerre Révolutionnaire** - French counter-insurgency, advanced-level
+1. Go to **"OAuth2"** → **"URL Generator"**
+2. Under **SCOPES**, check:
+   - ✅ `bot`
+   - ✅ `applications.commands`
+3. Under **BOT PERMISSIONS**, check:
+   - ✅ `Send Messages`
+   - ✅ `Use Slash Commands`
+   - ✅ `Read Message History`
+   - ✅ `Manage Messages` (needed for /delete command)
+4. Copy the generated URL and paste it in your browser
+5. Select your Discord server and authorize
 
-### Modern-Expeditionary Phylogeny
-- **E-1: Fast & Light** - Rapid deployment doctrine, moderate-level
-- **E-2: Fortress Nation** - Total homeland defense, moderate-level
+### Step 4: Install Dependencies
 
-### Resistance-Asymmetric Phylogeny
-- **F-1: Asymmetric Insurgency** - David vs Goliath doctrine, moderate-level
-- **F-2: Cyber-Dominance** - Digital warfare state, elite-level
+Open a terminal in your project folder and run:
 
-### Integrated-Future Phylogeny
-- **G-1: Hybrid Threat** - Multi-domain warfare, expert-level
-- **G-2: Expeditionary Capitalism** - Military-industrial capitalism, advanced-level
-
----
-
-## 📊 Doctrine Details
-
-### Difficulty Ratings
-- **MODERATE** - Easier to master, proven strategies
-- **ADVANCED** - Complex coordination, modern systems
-- **EXPERT** - Specialized approach, unique challenges
-- **ELITE** - Cutting-edge or highly experimental
-
-Each doctrine includes:
-- **Strategic Maxim** - Core philosophy in one sentence
-- **4 Operational Strengths** - What this doctrine does well
-- **4 Operational Weaknesses** - Vulnerabilities and challenges
-
----
-
-## 🎮 How to Use
-
-### For Players
-1. **Open the app** - Click link your GM provides
-2. **Select choices** - Answer 8 questions about your military
-3. **Watch progress** - See the green checkmarks and progress bar
-4. **Generate doctrine** - Click "Generate Doctrine Summary"
-5. **Export** - Copy, print, or share your doctrine
-6. **Save** - Store in your browser or export as JSON
-
-### For Game Masters
-1. **Deploy** - Follow Quick Start above (2 minutes)
-2. **Share link** - Send to your Nation RP community
-3. **Players use it** - They generate and save their doctrines
-4. **Roleplay consequences** - Use doctrines to guide military behavior
-5. **Track evolution** - See how doctrines change with the timeline
-
-### For Developers
-1. **Customize** - Edit `doctrine-data.js` to add doctrines
-2. **Change colors** - Edit `:root` variables in `styles.css`
-3. **Add categories** - Follow the patterns in HTML/JS
-4. **Deploy** - Works on any static hosting (GitHub Pages, Netlify, etc.)
-
----
-
-## 🛠️ Technical Details
-
-### What You Get
-- **5 Application Files** (100 KB total)
-  - `index.html` - Page structure
-  - `styles.css` - Styling + responsive design + multi-page layouts
-  - `script.js` - All interactivity and generation logic
-  - `pages.js` - Multi-page navigation and doctrine storage
-  - `doctrine-data.js` - All doctrine and content data
-
-### Requirements
-- **None!** Pure HTML/CSS/JavaScript
-- No server needed • No database required • No build step • Works offline after first load
-
-### Browser Support
-✅ Chrome 90+ • ✅ Firefox 88+ • ✅ Safari 14+ • ✅ Edge 90+ • ✅ Mobile browsers
-
-### Performance
-- **Total Size**: ~100 KB (5 files)
-- **Load Time**: <100ms on most connections
-- **Zero Dependencies**: No external libraries or frameworks
-- **Offline Ready**: Works without internet after first load
-- **Storage**: Uses browser localStorage for doctrine persistence (unlimited for most browsers)
-
-### Multi-Page System
-The application includes 5 pages accessed via navigation bar:
-- **Builder** - Create and customize doctrines
-- **Gallery** - View, delete, and manage saved doctrines
-- **Compare** - Side-by-side comparison of two doctrines
-- **History** - Timeline view of doctrine evolution
-- **Guide** - Help documentation and usage tips
-
-### Data Persistence
-- Doctrines saved to browser localStorage (persists after closing browser)
-- Export/Import functionality via JSON files for backup and sharing
-- DoctrineStorage class manages all data operations
-
----
-
-## 🎨 Customization Guide
-
-### Add a New Doctrine
-
-Edit `doctrine-data.js` and add to `namedDoctrines`:
-
-```javascript
-"X-1": {
-    name: "Your Doctrine Name",
-    maxim: "Your Strategic Maxim",
-    difficulty: "MODERATE",  // MODERATE, ADVANCED, EXPERT, ELITE
-    description: "Your doctrine description...",
-    strengths: ["Strength 1", "Strength 2", "Strength 3", "Strength 4"],
-    weaknesses: ["Weakness 1", "Weakness 2", "Weakness 3", "Weakness 4"]
-}
+```bash
+pip install -r requirements.txt
 ```
 
-Then add matching logic in `script.js` in the `matchToNamedDoctrine()` function.
+### Step 5: Create Configuration File
 
-### Change Colors
+1. Create a `.env` file in your project folder (same location as `bot.py`)
+2. Add your bot token:
+   ```
+   DISCORD_TOKEN=your_bot_token_here
+   ```
+3. Replace `your_bot_token_here` with the token from Step 2
+4. Save the file
 
-Edit `:root` variables in `styles.css`:
+### Step 6: Run the Bot
 
-```css
-:root {
-    --bg-dark-primary: #0a1428;     /* Primary dark background */
-    --bg-dark-secondary: #2d5a3d;   /* Secondary dark background */
-    --accent-color: #dc143c;        /* Alert/highlight color */
-    --gold-color: #d4af37;          /* Accent color */
-    --text-color: #e0e0e0;          /* Primary text */
-    --secondary-text-color: #b0b0b0; /* Secondary text */
-    /* ...etc... */
-}
+```bash
+python bot.py
 ```
 
-The same variables work for both light and dark themes via `.light-theme` class.
-
-### Add a New Category
-
-1. Add section to `index.html` with 4 option cards in the builder
-2. Add category to `doctrineContent` in `doctrine-data.js`
-3. Initialize category in `selections` object in `script.js` 
-4. Add output generation in `generateDoctrine()` function
-5. Add to `requiredCategories` array if mandatory
-6. Update the matching algorithm in `matchToNamedDoctrine()` if needed
-
-### Add a New Page
-
-1. Create page HTML structure in `index.html` (the builder page is already wrapped)
-2. Add page name to `pages` array in `PageManager` constructor in `pages.js`
-3. Add title mapping in `getPageTitle()` method
-4. Create `load[PageName]Page()` method in `PageManager` class
-5. Add page-specific CSS styles in `styles.css`
-
-------
-
-## 📖 File Structure
-
+You should see:
 ```
-Cosmos/
-├── index.html              (15 KB) - Main application
-├── styles.css              (14 KB) - All styling
-├── script.js               (14 KB) - All functionality
-├── doctrine-data.js        (19 KB) - All content
-├── README.md               (this file)
-└── .git/                   - Version control
+YourBotName#1234 has connected to Discord!
+Synced 7 command(s)
 ```
 
----
+🎉 **Your bot is now live!**
 
-## 🚀 Deployment
+### Step 7: Test It Out
 
-### GitHub Pages (Recommended)
-1. Push repository to GitHub
-2. Go to Settings → Pages
-3. Source: `main` branch / `root` folder
-4. Site live at: `https://yourusername.github.io/Cosmos`
+1. Go to your Discord server
+2. Type `/` in a channel to see available commands
+3. Try `/reservations` to view the board
+4. Try `/reserve California` to make a reservation
+5. Try `/list_nations` to see all available options
 
-### Other Static Hosting
-Works on any static host: Netlify • GitLab Pages • Vercel • AWS S3 • Any web server
+## 📝 Usage Examples
 
-### Local Testing
-Just open `index.html` in a browser. No server needed!
+### Viewing Reservations
+```
+/reservations
+```
+Shows the full reservation board with all nations and who reserved them.
 
----
+### Making a Reservation
+```
+/reserve Texas
+```
+Reserves Texas for you. If Texas is already taken, you'll get an error.
 
-## 💡 Tips for Roleplayers
+### Unreserving a Nation
+```
+/unreserve
+```
+Removes your reservation so someone else can take your nation.
 
-### Make Consistent Choices
-- Professional military → Centralized command
-- Militia forces → Guerrilla tactics
-- Advanced tech → Centralized to coordinate
-- Large manpower → Attrition tactics
+### Ending the Game
+```
+/delete
+```
+(Admin only) Clears all reservations, deletes all bot messages, and resets for a new game.
 
-### Use Your Weaknesses
-Your doctrine's weaknesses are features! They create interesting roleplay:
-- Logistics fragile? → Supply convoys get raided
-- Slow movement? → Enemy outmaneuvers you
-- Vulnerable to air? → Rely on allies or find cover
+## 🎯 Game Flow Example
 
-### Build a Nation Around It
-- What percentage of economy is military?
-- How do you conscript/recruit soldiers?
-- What's your nuclear policy?
-- How do you train soldiers?
-- What's your diplomatic stance?
+1. **Setup**: `/reservations` - Host shows the empty board
+2. **Players Reserve**: Players use `/reserve <nation>` to claim territories
+3. **During Game**: `/reservations` - Anyone can check who plays what
+4. **Game Ends**: Admin uses `/delete` to reset everything
+5. **New Game**: Repeat!
 
-### Evolve Your Doctrine
-Doctrines change over time! If you suffer defeats, maybe you shift approaches. That's great roleplay!
+## ⚙️ Customization
 
----
+### Changing Miscellaneous Nation Names
 
-## 🎓 Historical Context (1959)
+Edit the `"MISCELLANEOUS NATIONS"` section in [bot.py](bot.py):
 
-The year 1959 is a fascinating military crossroads:
-- **Nuclear Age**: Atomic weapons reshape warfare
-- **Jet Aircraft**: Speed changes everything
-- **Cold War Peak**: Ideological conflict dominates
-- **Technology Boom**: Early computers, missiles, guided weapons
-- **Decolonization**: Old empires losing control
-- **Last Cavalry**: Mounted warfare becoming obsolete
-- **Weird Science**: Anything seems possible to futurists
+```python
+"MISCELLANEOUS NATIONS": [
+    "Minor Nation A", "Minor Nation B", "Minor Nation C",
+    "Minor Nation D", "Minor Nation E", "Minor Nation F"
+]
+```
 
-Your doctrine builder captures this moment, allowing:
-✅ Historical 1959 doctrines • ✅ Alternate history variants • ✅ Dieselpunk aesthetics • ✅ Weird War elements
+### Adding New Regions
 
----
+Add new regions to the `NATIONS` dictionary in [bot.py](bot.py):
 
-## ❓ FAQ
+```python
+"YOUR REGION": [
+    "Nation 1", "Nation 2", "Nation 3"
+],
+```
 
-**Q: Can I add my own doctrines?**
-A: Yes! Edit `doctrine-data.js` and add to `namedDoctrines`.
+### Changing the Prefix
 
-**Q: Does it collect data?**
-A: No! Everything runs in your browser. Only theme preference is saved locally.
+Edit the bot initialization in [bot.py](bot.py):
 
-**Q: Can I customize the colors?**
-A: Yes! Edit `:root` variables in `styles.css`.
+```python
+bot = commands.Bot(command_prefix='!', intents=intents)  # Change '!' to your prefix
+```
 
-**Q: How do I print my doctrine?**
-A: Click the 🖨️ button. Choose \"Save as PDF\" in the print dialog.
+## 💾 Data Storage
 
-**Q: Can I share my doctrine?**
-A: Yes! Click 📤 Share button for mobile, or 📋 Copy and paste text anywhere.
+- Reservations are stored in `reservations.json` in your project folder
+- This file is auto-created when the first reservation is made
+- All reservations persist between bot restarts
 
-**Q: Will it work on my phone?**
-A: Yes! Fully responsive. Works on any device with a modern browser.
+## 🐛 Troubleshooting
 
-**Q: Can I embed this on my website?**
-A: Not yet, but you can link to it on GitHub Pages. Embedding support could be added.
+### Bot won't start
+```
+ERROR: DISCORD_TOKEN not found in .env file!
+```
+- Make sure `.env` file exists and has `DISCORD_TOKEN=your_token`
+- Check there are no extra spaces around the equals sign
 
-**Q: How do I suggest improvements?**
-A: Edit the files and test locally first. Submit pull requests with improvements!
+### Commands not showing up
+- Slash commands can take up to 1 hour to appear globally
+- Try waiting a few minutes
+- Kick the bot and re-invite it if problems persist
+- Make sure you selected `applications.commands` scope when inviting
 
----
+### Bot offline immediately
+- Verify your token is correct (copy it again from Developer Portal)
+- Check that "Message Content Intent" is enabled
+- Try regenerating your token and updating `.env`
 
-## 🎯 Use Cases
+### `/delete` command doesn't work
+- Make sure the bot has **"Manage Messages"** permission
+- Verify you're an admin in the server
+- Check that the bot has access to the channel
 
-### For Nation RP Communities
-- Give players a framework for military customization
-- Create balanced military forces through doctrine variety
-- Generate roleplay hooks through doctrine weaknesses
-- Teach players about real military history (1959)
+### Can't reserve a nation
+- Check spelling (autocomplete helps with this)
+- Make sure someone hasn't already reserved it
+- Check that you don't already have a different nation reserved
 
-### For Worldbuilding
-- Design military cultures for fictional nations
-- Create realistic alternate history scenarios
-- Explore \"what if\" military technology divergences
-- Build coherent military-economy relationships
+## 📦 Files
 
-### For Game Design
-- Inspire TTRPG (tabletop RPG) mechanics
-- Create faction identities through doctrine
-- Generate tactical challenges through weaknesses
-- Build campaign-spanning military conflicts
-
-### For Education
-- Teach Cold War history interactively
-- Explain military doctrine concepts
-- Show doctrine-strategy connections
-- Illustrate real military decision-making
-
----
-
-## 🌍 Examples
-
-### Example 1: \"The Red Steamroller\"
-Offensive • Conscript • Land • Attrition • Modern • Centralized • Heavy • Psychological Warfare
-**Matches**: Deep Battle doctrine. Soviet-style overwhelming power.
-
-### Example 2: \"The Fast Response\"
-Balanced • Professional • Land • Maneuver • Cutting-Edge • Decentralized • Light • Elite Units + Intelligence
-**Matches**: Mobile Warfare doctrine. German-style rapid response.
-
-### Example 3: \"The Fortress Nation\"
-Defensive • Militia • Land • Siegecraft • Practical • Rigid • Depot • Military Engineering + Elite Units
-**Matches**: No historical match. A unique defensive doctrine.
-
----
-
-## 📞 Support & Documentation
-
-**Getting Started?**
-- Open `index.html` in your browser
-- Read the tooltips (?) for help
-- Check info boxes for tips
-
-**Deploying to GitHub Pages?**
-- Push files to GitHub
-- Settings → Pages → main/root
-- Enable, wait 1-2 minutes, done!
-
-**Want to customize?**
-- Edit `doctrine-data.js` to add content
-- Edit `:root` in `styles.css` to change colors
-- Read code comments for details
-
-**Find a bug?**
-- Check browser console (F12)
-- Try different browser
-- Clear cache and refresh
-
----
-
-## 📋 Checklist for Game Masters
-
-- [ ] Read this README
-- [ ] Test locally (open index.html)
-- [ ] Push to GitHub
-- [ ] Enable GitHub Pages
-- [ ] Test live link
-- [ ] Share with players
-- [ ] Gather feedback
-- [ ] Customize doctrines (optional)
-- [ ] Share final link in Discord
-
----
-
-## 🎊 Credits
-
-- **Military Doctrine Research**: Comprehensive analysis of 1959 military strategies
-- **1959 Historical Doctrines**: US, USSR, UK, France, Israel, Germany
-- **Alternate History Variants**: Dieselpunk, Weird War, speculative technologies
-- **UI/UX Design**: Cold War aesthetic with modern accessibility
-
----
+- `bot.py` - Main bot code with all commands
+- `requirements.txt` - Python dependencies
+- `.env.example` - Configuration template
+- `README.md` - This file
+- `reservations.json` - Auto-generated, stores all reservations
 
 ## 📄 License
 
-Free to use and modify for your Nation RP community. No attribution required, but appreciated!
+Free to use and modify for your gaming needs!
+
+## 🤝 Support
+
+Need help? Check the troubleshooting section above or review the [Discord.py documentation](https://discordpy.readthedocs.io/).
 
 ---
 
-**Built for roleplayers who want deep military doctrine customization for their 1959 alternate history worlds.** ⚔️
+**Ready to play?** Start with Step 1 above and you'll be up and running in minutes! 🎮
 
-*Version 1.0 | December 2025 | Ready for GitHub Pages*
